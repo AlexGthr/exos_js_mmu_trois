@@ -16,24 +16,62 @@ countTotal = 0;
 
 // Function tictactoe 
 function tictactoe(box) {
-    if (count === 1 && box.textContent === "") { // Si count = 1 et texte vide, alors X
-        box.textContent = "X";
-        box.classList.add("croix")
-        count++
-        countTotal++
-    } else if (count === 2 && box.textContent === "") { // Si count = 2 et texte vide, alors O
-        box.textContent = "O";
-        box.classList.add("rond")
-        count--
-        countTotal++
-    } else { // Sinon, la case est déjà cliqué
-        showReaction("clicked", box)
+    if (countTotal < 9) {
+        if (count === 1 && box.textContent === "") { // Si count = 1 et texte vide alors :
+            box.textContent = "X"; // ecris X
+            box.classList.add("croix"); // Rajoute la classe croix
+            count++; // Passe le count à 2 pour dire que c'est au O de jouer
+            countTotal++; // Nombre total de coup jouer
+        } else if (count === 2 && box.textContent === "") { 
+            box.textContent = "O";
+            box.classList.add("rond");
+            count--;
+            countTotal++;
+        } else { 
+            showReaction("clicked", box); // Si la case est déjà jouer, alors modifie le fond en rouge
+        }
     }
+}
+
+function victoire() { // Gestion de la victoire
+    const lines = [
+        [1, 2, 3], // lignes horizontales
+        [4, 5, 6],
+        [7, 8, 9],
+        [1, 4, 7], // lignes verticales
+        [2, 5, 8],
+        [3, 6, 9],
+        [1, 5, 9], // diagonales
+        [3, 5, 7]
+    ];
+
+    for (const line of lines) {
+        const [a, b, c] = line;
+        const boxA = document.querySelector(`.box_${a}`);
+        const boxB = document.querySelector(`.box_${b}`);
+        const boxC = document.querySelector(`.box_${c}`);
+
+        if (boxA.textContent !== "" && boxA.textContent === boxB.textContent && boxB.textContent === boxC.textContent) {
+            // Si il y a une victoire, ajoute la classe "green" au element gagnant
+            boxA.classList.add("green")
+            boxB.classList.add("green")
+            boxC.classList.add("green")
+
+            return true;
+        }
+    }
+
+    return false; // Pas de victoire
 }
 
 // Function qui va gerer le texte en dessous de la partie
 function phrases(text) {
-    if (countTotal === 9) { // Si le nombre total de coup est joué, alors fin de la partie.
+    if (victoire()) { // Si la function victoire est "true" alors
+        text.textContent = `Joueur ${count === 1 ? 'O' : 'X'} remporte la partie !`;
+        board.classList.add("fin"); // Class fin qui, en CSS, desactive le jeu
+    }
+    
+    else if (countTotal === 9) { // Si le nombre total de coup est joué, alors fin de la partie.
         text.textContent = "Fin de la partie !"
     }
     else if (count === 1) { // Sinon si count = 1 alors X
@@ -49,8 +87,11 @@ function partieReset(parent) {
 
     parent.querySelectorAll(".carree").forEach(function (validBox) {
 
+        // On retire toutes les class
+        board.classList.remove("fin");
         validBox.classList.remove("croix");
         validBox.classList.remove("rond");
+        validBox.classList.remove("green");
         validBox.textContent = "";
 
         count = 1;
@@ -67,11 +108,11 @@ function showReaction(type, clickedBox) {
     }
 }
 
-
 // On crée une boucle qui permettra de crée le nombre de box que l'ont souhaite (ici 9)
 for (let i = 1; i <= 9; i++) {
     const newBox = box.cloneNode(); // Clone des divs
     newBox.textContent = ""; // Texte vide
+    newBox.classList.add(["box_" + i])
     board.appendChild(newBox);
 
     newBox.addEventListener("click", function() {

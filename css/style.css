@@ -61,6 +61,14 @@ body {
     color: rgb(29, 134, 219);
 }
 
+.fin {
+    pointer-events: none;
+}
+
+.green {
+    background-color: rgba(13, 124, 13, 0.851);
+}
+
 .clicked {
     animation: click 1s;
 }
