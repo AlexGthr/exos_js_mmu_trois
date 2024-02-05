@@ -73,6 +73,12 @@ body {
     animation: click 1s;
 }
 
+p {
+    padding-top: 15px;
+    text-align: center;
+    color:rgb(175, 173, 173);
+}
+
 @keyframes click {
     from {
         background-color: rgba(59, 59, 59, 0.851);

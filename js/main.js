@@ -8,11 +8,18 @@ box.classList.add("carree")
 // On récupère le texte de base dans le DOM
 let phrase = document.querySelector(".phrase")
 
+// On récupère les span du DOM pour la gestions du score
+let scoreX = document.getElementById("scoreX")
+let scoreO = document.getElementById("scoreO")
+let nbScoreX = 0;
+let nbScoreO = 0;
+
 // On déclare une variable qui va définir si on joue un X ou un O (1 - X 2 - O)
-count = 1;
+let count = 1;
+
 
 // On count le nombre total de coup joué
-countTotal = 0;
+let countTotal = 0;
 
 // Function tictactoe 
 function tictactoe(box) {
@@ -69,6 +76,15 @@ function phrases(text) {
     if (victoire()) { // Si la function victoire est "true" alors
         text.textContent = `Joueur ${count === 1 ? 'O' : 'X'} remporte la partie !`;
         board.classList.add("fin"); // Class fin qui, en CSS, desactive le jeu
+
+        if(count === 2) {
+            nbScoreX++
+            scoreX.textContent = nbScoreX;
+        }
+        else {
+            nbScoreO++
+            scoreO.textContent = nbScoreO;
+        }
     }
     
     else if (countTotal === 9) { // Si le nombre total de coup est joué, alors fin de la partie.
