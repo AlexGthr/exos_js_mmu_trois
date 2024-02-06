@@ -66,18 +66,8 @@ body {
     pointer-events: none;
 }
 
-.green {
-    background-color: rgba(13, 124, 13, 0.851);
-}
-
 .clicked {
     animation: click 1s;
-}
-
-p {
-    padding-top: 15px;
-    text-align: center;
-    color:rgb(175, 173, 173);
 }
 
 @keyframes click {
