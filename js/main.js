@@ -8,12 +8,6 @@ box.classList.add("carree")
 // On récupère le texte de base dans le DOM
 let phrase = document.querySelector(".phrase")
 
-// On récupère les span du DOM pour la gestions du score
-let scoreX = document.getElementById("scoreX")
-let scoreO = document.getElementById("scoreO")
-let nbScoreX = 0;
-let nbScoreO = 0;
-
 // On déclare une variable qui va définir si on joue un X ou un O (1 - X 2 - O)
 let count = 1;
 
@@ -40,54 +34,10 @@ function tictactoe(box) {
     }
 }
 
-function victoire() { // Gestion de la victoire
-    const lines = [
-        [1, 2, 3], // lignes horizontales
-        [4, 5, 6],
-        [7, 8, 9],
-        [1, 4, 7], // lignes verticales
-        [2, 5, 8],
-        [3, 6, 9],
-        [1, 5, 9], // diagonales
-        [3, 5, 7]
-    ];
-
-    for (const line of lines) {
-        const [a, b, c] = line;
-        const boxA = document.querySelector(`.box_${a}`);
-        const boxB = document.querySelector(`.box_${b}`);
-        const boxC = document.querySelector(`.box_${c}`);
-
-        if (boxA.textContent !== "" && boxA.textContent === boxB.textContent && boxB.textContent === boxC.textContent) {
-            // Si il y a une victoire, ajoute la classe "green" au element gagnant
-            boxA.classList.add("green")
-            boxB.classList.add("green")
-            boxC.classList.add("green")
-
-            return true;
-        }
-    }
-
-    return false; // Pas de victoire
-}
-
 // Function qui va gerer le texte en dessous de la partie
 function phrases(text) {
-    if (victoire()) { // Si la function victoire est "true" alors
-        text.textContent = `Joueur ${count === 1 ? 'O' : 'X'} remporte la partie !`;
-        board.classList.add("fin"); // Class fin qui, en CSS, desactive le jeu
 
-        if(count === 2) {
-            nbScoreX++
-            scoreX.textContent = nbScoreX;
-        }
-        else {
-            nbScoreO++
-            scoreO.textContent = nbScoreO;
-        }
-    }
-    
-    else if (countTotal === 9) { // Si le nombre total de coup est joué, alors fin de la partie.
+    if (countTotal === 9) { // Si le nombre total de coup est joué, alors fin de la partie.
         text.textContent = "Fin de la partie !"
     }
     else if (count === 1) { // Sinon si count = 1 alors X
@@ -107,7 +57,6 @@ function partieReset(parent) {
         board.classList.remove("fin");
         validBox.classList.remove("croix");
         validBox.classList.remove("rond");
-        validBox.classList.remove("green");
         validBox.textContent = "";
 
         count = 1;
